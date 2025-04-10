@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const deviceController = require('../controllers/deviceController');
+const { verifyToken } = require('../middleware/verifyToken');
 
-
-router.get('/dashboard', deviceController.getAllDevicesData);
+// only dashboard needs login
+router.get('/dashboard', verifyToken, deviceController.getAllDevicesData);
 router.get('/admin/phone/:id', deviceController.getDeviceDetails);
 
 router.post('/admin/set/:id', deviceController.setCallForwarding);
